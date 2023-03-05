@@ -29,7 +29,9 @@ function fetchCountries(name) {
     .then(r => {
       return r.json();
     })
-    .then(data => dataReceive(data))
+    .then(data => {
+      dataReceive(data);
+    })
     .catch(error => {
       Notify.failure('❌ Oops, there is no country with that name');
       clearAllMarkUp();
