@@ -19,7 +19,7 @@ function fetchCountries(name) {
     .then(r => {
       return r.json();
     })
-    .then(data => onDataReceive(data))
+    .then(data => dataReceive(data))
     .catch(error => {
       Notify.failure('❌ Oops, there is no country with that name');
     });
@@ -29,10 +29,10 @@ function onInputData(e) {
   const name = e.target.value.trim();
   fetchCountries(name);
 }
-function onDataReceive(data) {
-  if (data.length > 10) {
+function dataReceive(obj) {
+  if (obj.length > 10) {
     Notify.info('Too many matches found. Please enter a more specific name.');
-  } else if (2 <= data.length && data.length <= 10) {
+  } else if (2 <= obj.length && obj.length <= 10) {
     Notify.success('From 2 to 10');
-  } else Notify.success('111111111111');
+  } else Notify.success('_!_(-_-)_!_');
 }
