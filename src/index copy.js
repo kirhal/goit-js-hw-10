@@ -1,4 +1,3 @@
-import { fetchCountries } from './fetchCountries';
 import './css/styles.css';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
@@ -12,6 +11,8 @@ const DEBOUNCE_DELAY = 300;
 const inputEl = document.querySelector('#search-box');
 const listEl = document.querySelector('.country-list');
 const countryEl = document.querySelector('.country-info');
+const url = `https://restcountries.com/v2/name/`;
+const urlOpt = `?fields=name,capital,population,flags,languages`;
 
 inputEl.addEventListener('input', debounce(onInputData, DEBOUNCE_DELAY));
 
@@ -21,7 +22,13 @@ function onInputData(e) {
     clearAllMarkUp();
     return;
   }
-  fetchCountries(name)
+  fetchCountries(name);
+}
+function fetchCountries(name) {
+  fetch(`${url}${name}${urlOpt}`)
+    .then(r => {
+      return r.json();
+    })
     .then(data => {
       dataReceive(data);
     })
@@ -30,7 +37,6 @@ function onInputData(e) {
       clearAllMarkUp();
     });
 }
-
 function dataReceive(obj) {
   if (obj.length > 10) {
     Notify.info('Too many matches found. Please enter a more specific name.');
